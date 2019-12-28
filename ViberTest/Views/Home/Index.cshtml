@@ -1,0 +1,22 @@
+﻿@{
+    ViewBag.Title = "Home Page";
+}
+
+@Scripts.Render("~/bundles/modernizr")
+@Scripts.Render("~/bundles/jquery")
+@Scripts.Render("~/bundles/bootstrap")
+
+<script>
+    $.ajax({
+        url: "https://chatapi.viber.com/pa/",
+        type: "POST",
+        crossDomain: true,
+        data: {
+            "url": "https://yourchat.io/",
+            "send_name": true,
+            "send_photo": true
+        },
+        success: function (data) { alert(data); },
+    });
+
+</script>
