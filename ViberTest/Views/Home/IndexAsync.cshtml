@@ -1,7 +1,82 @@
-﻿
+﻿@Scripts.Render("~/bundles/modernizr")
+@Scripts.Render("~/bundles/jquery")
+@Scripts.Render("~/bundles/jquery-ui")
 @{
     ViewBag.Title = "IndexAsync";
 }
-
+<script src="~/Scripts/vbscript/as.viberChat.js"></script>
 <h2>IndexAsync</h2>
 
+<button id="get_webhook">Set Webhoook</button> <br />
+<button id="del_webhook">Delete Webhoook</button> <br />
+
+<form method="post" id="send_message">
+    <input type="text" id="msg" /><br>
+    <input type="submit" value="send" />
+</form>
+<form method="post" id="send_broadcast">
+    <input type="text" id="broadcast_text" /><br>
+    <input type="submit" value="send broadcast" />
+</form>
+<div id="output_result">
+
+</div>
+
+<script>
+    $('#get_webhook').click(function (event) {
+        event.preventDefault();
+        //alert($('#msg').val());
+        var cont = {
+            viberToken: "4acbce3d2567d680-2b47e9fc1afd1297-aace9bf974f27814",
+            botUri: "https://yourchat.io/",
+        };
+        console.log('webhook');
+        console.log(cont);
+        as.viberChat.setWebhook(cont);
+    });
+
+    $('#del_webhook').click(function (event) {
+        event.preventDefault();
+        //alert($('#msg').val());
+        var cont = {
+            viberToken: "4acbce3d2567d680-2b47e9fc1afd1297-aace9bf974f27814",
+        };
+
+        as.viberChat.removeWebhook(cont);
+    });
+
+
+    $('#send_message').submit(function (event) {
+        event.preventDefault();
+        //alert($('#msg').val());
+        var cont = {
+            viberToken: "4acbce3d2567d680-2b47e9fc1afd1297-aace9bf974f27814",
+            userID: "1Xyc2cGDSAi2nMbUjyhr6w==",
+            msg: $('#msg').val(),
+            sender: {
+                name: 'Ковалев',
+                avatar: ''
+            },
+        };
+        console.log('msg');
+        console.log(cont);
+        as.viberChat.sendMessage(cont);
+    });
+
+    $('#send_broadcast').submit(function (event) {
+        event.preventDefault();
+        //alert($('#broadcast_text').val());
+        var cont1 = {
+            viberToken: '4acbce3d2567d680-2b47e9fc1afd1297-aace9bf974f27814',
+            msg: $('#broadcast_text').val(),
+            sender: {
+                name: 'Ковалев',
+                avatar: ''
+            },
+        };
+
+        console.log('broad');
+        console.log(cont1);
+        as.viberChat.sendBroadcastMessage(cont1);
+    });
+</script>

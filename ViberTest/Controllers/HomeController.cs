@@ -1,4 +1,5 @@
 ﻿using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,34 +11,65 @@ namespace ViberTest.Controllers
 {
     public class HomeController : Controller
     {
+        ViberRequests vr = new ViberRequests();
+        string vbToken = "4acbce3d2567d680-2b47e9fc1afd1297-aace9bf974f27814";
+        Sender sender = new Sender { name = "Ковалев", avatar = "" };
         public async System.Threading.Tasks.Task<ActionResult> IndexAsync()
-        {
-            string vbToken = "4acbce3d2567d680-2b47e9fc1afd1297-aace9bf974f27814";
-            ViberRequests vr = new ViberRequests();
+        {  
             //string sethook = await vr.GetWebhook(vbToken, "https://yourchat.io/");
-            //bool delhook = await vr.RemoveWebhook(vbToken, "https://yourchat.io/");
-            Sender sender = new Sender { name = "Ковалев", avatar = "" };
-            //string msg = await vr.SendMessage(vbToken, "https://yourchat.io/", "1Xyc2cGDSAi2nMbUjyhr6w==", sender, "test");
-            List<string> usersID = new List<string>();
-            usersID.Add( @"1Xyc2cGDSAi2nMbUjyhr6w==");
-            usersID.Add(@"1Xyc2cGDSAi2nmngUjyhr6w==");
-            usersID.Add(@"1Xydc2cGDSAi2nMbUjydcfw==");
-            string broadcast = await vr.SendBroadcastMessage(vbToken, "https://yourchat.io/", usersID, sender, "broadcast");
+            //bool delhook = await vr.RemoveWebhook(vbToken, "https://yourchat.io/");  
+           
+            //string broadcast = await vr.SendBroadcastMessage(vbToken, "https://yourchat.io/", usersID, sender, "broadcast");
+            //string info = await vr.GetAccountInfo(vbToken, "https://yourchat.io/");
+            //string userInfo = await vr.GetUserInfo(vbToken, "https://yourchat.io/", "1Xyc2cGDSAi2nMbUjyhr6w==");
             return View();
         }
 
-        public ActionResult About()
+        public async System.Threading.Tasks.Task<ActionResult> GetWebhookAsync()
         {
-            ViewBag.Message = "Your application description page.";
-
-            return View();
+            string _vbToken = Request.Form["viberToken"];
+            string _botUri = Request.Form["botUri"];
+            string sethook = await vr.GetWebhook(_vbToken, "https://yourchat.io/");
+            return Json(sethook);
         }
 
-        public ActionResult Contact()
+        public async System.Threading.Tasks.Task<ActionResult> DeleteWebhookAsync()
         {
-            ViewBag.Message = "Your contact page.";
-
-            return View();
+            string _vbToken = Request.Form["viberToken"];
+            bool sethook = await vr.RemoveWebhook(_vbToken);
+            return Json(sethook);
         }
-    }
+        public async System.Threading.Tasks.Task<ActionResult> SendMsgAsync()
+        {
+            string _vbToken = Request.Form["viberToken"];
+            string _userID = Request.Form["userID"];
+            string _message = Request.Form["msg"];
+            Sender _sender = new Sender
+            {
+                name = Request.Form["sender[name]"],
+                avatar = Request.Form["sender[avatar]"]
+            };
+            
+            string msg = await vr.SendMessage(_vbToken, _userID, _sender, _message);
+            return Json(msg);
+        }
+
+        public async System.Threading.Tasks.Task<ActionResult> SendBroadcastMsgAsync()
+        {
+            List<string> _usersID = new List<string>();
+            _usersID.Add(@"1Xyc2cGDSAi2nMbUjyhr6w==");
+            _usersID.Add(@"1Xyc2cGDSAi2nmngUjyhr6w==");
+            _usersID.Add(@"1Xydc2cGDSAi2nMbUjydcfw==");
+            string _vbToken = Request.Form["viberToken"];
+            string _message = Request.Form["msg"];
+            Sender _sender = new Sender
+            {
+                name = Request.Form["sender[name]"],
+                avatar = Request.Form["sender[avatar]"]
+            };
+            
+            string msg = await vr.SendBroadcastMessage(_vbToken, _usersID, _sender, _message);
+            return Json(msg);
+        }
+    } 
 }

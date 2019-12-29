@@ -42,7 +42,7 @@ namespace ViberTest.BLL
             catch { return null; }
         }
 
-        public async Task<bool> RemoveWebhook(string viberToken, string botUri)
+        public async Task<bool> RemoveWebhook(string viberToken)
         {
             HttpClient _cient = new HttpClient();
             HttpRequestMessage _request = new HttpRequestMessage();
@@ -69,7 +69,7 @@ namespace ViberTest.BLL
             catch { return false; }
         }
 
-        public async Task<string> SendMessage(string viberToken, string botUri, string userID, Sender sender, string msg)
+        public async Task<string> SendMessage(string viberToken, string userID, Sender sender, string msg)
         {
             HttpClient _cient = new HttpClient();
             HttpRequestMessage _request = new HttpRequestMessage();
@@ -106,7 +106,7 @@ namespace ViberTest.BLL
             catch { return null; }
         }
 
-        public async Task<string> SendBroadcastMessage(string viberToken, string botUri, List<string> usersID, Sender sender, string msg)
+        public async Task<string> SendBroadcastMessage(string viberToken, List<string> usersID, Sender sender, string msg)
         {
             HttpClient _cient = new HttpClient();
             HttpRequestMessage _request = new HttpRequestMessage();
@@ -127,7 +127,6 @@ namespace ViberTest.BLL
             _request.Headers.Add("X-Viber-Auth-Token", viberToken);
 
             _jContent.Add("broadcast_list", IDs);
-            //_jContent.Add("sender", js);
             _jContent.Add("tracking_data", "tracking data");
             _jContent.Add("type", "text");
             _jContent.Add("text", msg);
@@ -147,6 +146,57 @@ namespace ViberTest.BLL
             catch { return null; }
         }
 
+        public async Task<string> GetAccountInfo (string viberToken, string botUri)
+        {
+            HttpClient _cient = new HttpClient();
+            HttpRequestMessage _request = new HttpRequestMessage();
+            HttpResponseMessage _respond = new HttpResponseMessage();
+            JObject _jContent = new JObject();
+            _request.Headers.Clear();
+            _request.RequestUri = new Uri("https://chatapi.viber.com/pa/get_account_info");
+            _request.Method = HttpMethod.Post;
+            _request.Headers.Add("Content", "application/json");
+            _request.Headers.Add("X-Viber-Auth-Token", viberToken);
+            HttpContent _content = new StringContent(_jContent.ToString());
+            _request.Content = _content;
+            try
+            {
+                _respond = await _cient.SendAsync(_request);
+                if (_respond.IsSuccessStatusCode)
+                {
+                    string AnswerContent = await _respond.Content.ReadAsStringAsync();
+                    return AnswerContent;
+                }
+                else return null;
+            }
+            catch { return null; }
+        }
 
+        public async Task<string> GetUserInfo(string viberToken, string botUri, string userID)
+        {
+            HttpClient _cient = new HttpClient();
+            HttpRequestMessage _request = new HttpRequestMessage();
+            HttpResponseMessage _respond = new HttpResponseMessage();
+            JObject _jContent = new JObject();
+            _request.Headers.Clear();
+            _request.RequestUri = new Uri("https://chatapi.viber.com/pa/get_account_info");
+            _request.Method = HttpMethod.Post;
+            _request.Headers.Add("Content", "application/json");
+            _request.Headers.Add("X-Viber-Auth-Token", viberToken);
+            HttpContent _content = new StringContent(_jContent.ToString());
+            _request.Content = _content;
+            _jContent.Add("id", userID);
+            try
+            {
+                _respond = await _cient.SendAsync(_request);
+                if (_respond.IsSuccessStatusCode)
+                {
+                    string AnswerContent = await _respond.Content.ReadAsStringAsync();
+                    return AnswerContent;
+                }
+                else return null;
+            }
+            catch { return null; }
+        }
     }
 }
