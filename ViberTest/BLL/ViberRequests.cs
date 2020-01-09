@@ -27,6 +27,7 @@ namespace ViberTest.BLL
             //_jContent.Add("event_types",);
             _jContent.Add("send_name", true);
             _jContent.Add("send_photo", true);
+
             HttpContent _content = new StringContent(_jContent.ToString());
             _request.Content = _content;
             try
@@ -186,6 +187,35 @@ namespace ViberTest.BLL
             HttpContent _content = new StringContent(_jContent.ToString());
             _request.Content = _content;
             _jContent.Add("id", userID);
+            try
+            {
+                _respond = await _cient.SendAsync(_request);
+                if (_respond.IsSuccessStatusCode)
+                {
+                    string AnswerContent = await _respond.Content.ReadAsStringAsync();
+                    return AnswerContent;
+                }
+                else return null;
+            }
+            catch { return null; }
+        }
+
+        public async Task<string> TestBot(string botUri, string eventType)
+        {
+            HttpClient _cient = new HttpClient();
+            HttpRequestMessage _request = new HttpRequestMessage();
+            HttpResponseMessage _respond = new HttpResponseMessage();
+            _request.Headers.Clear();
+            _request.RequestUri = new Uri(botUri);
+            _request.Method = HttpMethod.Post;
+            _request.Headers.Add("Content", "application/json");
+            
+            Dictionary<string, string> cont = new Dictionary<string, string>();
+            cont.Add("event", eventType);
+            cont.Add("timestamp", "1457764197627");
+            cont.Add("message_token", "4912661846655238145");
+            HttpContent _content = new FormUrlEncodedContent(cont);
+            _request.Content = _content;
             try
             {
                 _respond = await _cient.SendAsync(_request);

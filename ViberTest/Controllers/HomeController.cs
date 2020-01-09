@@ -29,7 +29,7 @@ namespace ViberTest.Controllers
         {
             string _vbToken = Request.Form["viberToken"];
             string _botUri = Request.Form["botUri"];
-            string sethook = await vr.GetWebhook(_vbToken, "https://yourchat.io/");
+            string sethook = await vr.GetWebhook(_vbToken, _botUri);
             return Json(sethook);
         }
 
@@ -70,6 +70,15 @@ namespace ViberTest.Controllers
             
             string msg = await vr.SendBroadcastMessage(_vbToken, _usersID, _sender, _message);
             return Json(msg);
+        }
+
+        public async System.Threading.Tasks.Task<ActionResult> TestWebhookAsync()
+        {
+            //string _vbToken = Request.Form["viberToken"];
+            string _botUri = Request.Form["botUri"];
+            string _eventType = Request.Form["event"];
+            string sethook = await vr.TestBot(_botUri, _eventType);
+            return Json(sethook);
         }
     } 
 }

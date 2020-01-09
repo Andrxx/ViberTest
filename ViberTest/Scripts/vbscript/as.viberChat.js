@@ -127,6 +127,27 @@ as.viberChat = {
             }
         });
     },
+
+    testBot: function (cont) {
+        console.log('test bot');
+        console.log(cont);
+        var data = {
+            viberToken: cont.viberToken,
+            botUri: cont.botUri,
+            event: cont.event
+        };
+        $.ajax({
+            url: "/Home/TestWebhookAsync",
+            type: 'POST',
+            data: data,
+            success: function (d) {
+                //alert('success');
+                if (d.status === "OK") {
+                    console.log(d);
+                }
+            }
+        });
+    },
 };
 
 
