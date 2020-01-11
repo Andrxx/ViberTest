@@ -80,5 +80,15 @@ namespace ViberTest.Controllers
             string sethook = await vr.TestBot(_botUri, _eventType);
             return Json(sethook);
         }
+
+        
+        public async System.Threading.Tasks.Task<ActionResult> TestSubscribeAsync()
+        {
+            string _botUri = "http://localhost:52524/Bot/Setup";
+            string _eventType = Request.Form["event"];
+            string _userId = Request.Form["user[id]"];
+            string _response = await vr.TestSubscribe(_botUri, _eventType, _userId);
+            return Json(_response);
+        }
     } 
 }

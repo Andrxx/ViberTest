@@ -20,6 +20,7 @@
 </form>
 
 <button id="bot_test">Bot Test</button> <br />
+<button id="sb_test">Subscribe Test</button> <br />
 <div id="output_result">
 
 </div>
@@ -29,8 +30,8 @@
         event.preventDefault();
         //alert($('#msg').val());
         var cont = {
-            viberToken: "4acbce3d2567d680-2b47e9fc1afd1297-aace9bf974f27814",//"4addaa2c4da7dee0-1e71c2088f77e61c-2ffe40d0ad8cc31c", //
-            botUri: "https://yourchat.io/", //"https://test1.web-automation.ru/"
+            viberToken: "4addaa2c4da7dee0-1e71c2088f77e61c-2ffe40d0ad8cc31c",// "4acbce3d2567d680-2b47e9fc1afd1297-aace9bf974f27814",//"4addaa2c4da7dee0-1e71c2088f77e61c-2ffe40d0ad8cc31c", //
+            botUri: "https://test1.web-automation.ru/Bot/Setup", // "https://yourchat.io/", //"https://test1.web-automation.ru/"
         };
         console.log('webhook');
         console.log(cont);
@@ -52,8 +53,8 @@
         event.preventDefault();
         //alert($('#msg').val());
         var cont = {
-            viberToken: "4acbce3d2567d680-2b47e9fc1afd1297-aace9bf974f27814",//"4addaa2c4da7dee0-1e71c2088f77e61c-2ffe40d0ad8cc31c",
-            userID: "1Xyc2cGDSAi2nMbUjyhr6w==",
+            viberToken: "4addaa2c4da7dee0-1e71c2088f77e61c-2ffe40d0ad8cc31c", // "4acbce3d2567d680-2b47e9fc1afd1297-aace9bf974f27814",//"4addaa2c4da7dee0-1e71c2088f77e61c-2ffe40d0ad8cc31c",
+            userID: "oW29KusKSftG3QEmHlcWoQ==",
             msg: $('#msg').val(),
             sender: {
                 name: 'Ковалев',
@@ -87,11 +88,35 @@
         //alert($('#msg').val());
         var cont2 = {
             viberToken: "4acbce3d2567d680-2b47e9fc1afd1297-aace9bf974f27814",//"4addaa2c4da7dee0-1e71c2088f77e61c-2ffe40d0ad8cc31c", //
-            botUri: "http://localhost:52524/Bot/Setup",
+            botUri: "https://test1.web-automation.ru/Bot/Setup",
             event: "webhook"
         };
         console.log('webhook');
+
         console.log(cont2);
         as.viberChat.testBot(cont2);
     });
+
+    $('#sb_test').click(function (event) {
+        event.preventDefault();
+        //alert($('#msg').val());
+        var cont = {
+            event: "subscribed",
+            timestamp: 1457764197627,
+            user: {
+                id: "01234567890A=",
+                name: "John McClane",
+                avatar: "",
+                country: "RU",
+                language: "en",
+                api_version: 1
+            },
+            message_token: 4912661846655238145
+        };
+        var jcont = JSON.stringify(cont);
+        console.log('subscribe');
+        console.log(jcont);
+        as.viberChat.sbTest(cont);
+    });
 </script>
+

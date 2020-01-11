@@ -184,9 +184,9 @@ namespace ViberTest.BLL
             _request.Method = HttpMethod.Post;
             _request.Headers.Add("Content", "application/json");
             _request.Headers.Add("X-Viber-Auth-Token", viberToken);
+            _jContent.Add("id", userID);
             HttpContent _content = new StringContent(_jContent.ToString());
             _request.Content = _content;
-            _jContent.Add("id", userID);
             try
             {
                 _respond = await _cient.SendAsync(_request);
@@ -214,6 +214,38 @@ namespace ViberTest.BLL
             cont.Add("event", eventType);
             cont.Add("timestamp", "1457764197627");
             cont.Add("message_token", "4912661846655238145");
+            HttpContent _content = new FormUrlEncodedContent(cont);
+            _request.Content = _content;
+            try
+            {
+                _respond = await _cient.SendAsync(_request);
+                if (_respond.IsSuccessStatusCode)
+                {
+                    string AnswerContent = await _respond.Content.ReadAsStringAsync();
+                    return AnswerContent;
+                }
+                else return null;
+            }
+            catch { return null; }
+        }
+
+        
+        public async Task<string> TestSubscribe(string botUri, string eventType, string userID)
+        {
+            HttpClient _cient = new HttpClient();
+            HttpRequestMessage _request = new HttpRequestMessage();
+            HttpResponseMessage _respond = new HttpResponseMessage();
+            _request.Headers.Clear();
+            _request.RequestUri = new Uri(botUri);
+            _request.Method = HttpMethod.Post;
+            _request.Headers.Add("Content", "application/json");
+
+            Dictionary<string, string> cont = new Dictionary<string, string>();
+            cont.Add("event", eventType);
+            //string _userId =  @"user":{ "id":"01234567890A="};
+            Dictionary<string, string> _user = new Dictionary<string, string>();
+            _user.Add("id", userID);
+            cont.Add("user", JsonConvert.SerializeObject(_user));
             HttpContent _content = new FormUrlEncodedContent(cont);
             _request.Content = _content;
             try

@@ -128,6 +128,28 @@ as.viberChat = {
         });
     },
 
+    getUserId: function (cont) {
+        console.log(cont);
+        var data = {
+            viberToken: cont.viberToken,
+            userID: cont.userID,
+            sender: cont.sender,
+            msg: cont.msg
+        };
+        $.ajax({
+            url: "/Home/SendMsgAsync",
+            type: 'POST',
+            data: data,
+            success: function (d) {
+                //alert('success');
+                if (d.status === "OK") {
+                    console.log(d);
+                }
+            }
+        });
+    },
+
+
     testBot: function (cont) {
         console.log('test bot');
         console.log(cont);
@@ -138,6 +160,38 @@ as.viberChat = {
         };
         $.ajax({
             url: "/Home/TestWebhookAsync",
+            type: 'POST',
+            data: data,
+            success: function (d) {
+                //alert('success');
+                if (d.status === "OK") {
+                    console.log(d);
+                }
+            }
+        });
+    },
+    sbTest: function (cont) {
+        console.log('test subscribe');
+        console.log(cont);
+        var data =
+        {
+            event: cont.event,
+            timestamp: cont.timestamp,
+            user: 
+            {
+                id: cont.user.id,//"01234567890A=",
+                name: cont.user.name,// "John McClane",
+                avatar: cont.user.avatar,//"",
+                country: cont.user.country,// "RU",
+                language: cont.user.language,// "en",
+                api_version: cont.user.api_version // 1
+            },
+            message_token: cont.message_token,
+            botUri: cont.botUri
+        };
+        console.log(data);
+        $.ajax({
+            url: "/Home/TestSubscribeAsync",
             type: 'POST',
             data: data,
             success: function (d) {
