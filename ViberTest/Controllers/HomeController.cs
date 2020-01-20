@@ -16,12 +16,6 @@ namespace ViberTest.Controllers
         Sender sender = new Sender { name = "Ковалев", avatar = "" };
         public async System.Threading.Tasks.Task<ActionResult> IndexAsync()
         {  
-            //string sethook = await vr.GetWebhook(vbToken, "https://yourchat.io/");
-            //bool delhook = await vr.RemoveWebhook(vbToken, "https://yourchat.io/");  
-           
-            //string broadcast = await vr.SendBroadcastMessage(vbToken, "https://yourchat.io/", usersID, sender, "broadcast");
-            //string info = await vr.GetAccountInfo(vbToken, "https://yourchat.io/");
-            //string userInfo = await vr.GetUserInfo(vbToken, "https://yourchat.io/", "1Xyc2cGDSAi2nMbUjyhr6w==");
             return View();
         }
 
@@ -84,7 +78,7 @@ namespace ViberTest.Controllers
         
         public async System.Threading.Tasks.Task<ActionResult> TestSubscribeAsync()
         {
-            string _botUri = "http://localhost:52524/Bot/Setup";
+            string _botUri = "https://test1.web-automation.ru/Bot/Setup";// "http://localhost:52524/Bot/Setup";
             string _eventType = Request.Form["event"];
             string _userId = Request.Form["user[id]"];
             string _response = await vr.TestSubscribe(_botUri, _eventType, _userId);

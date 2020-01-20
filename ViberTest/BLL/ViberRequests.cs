@@ -75,9 +75,9 @@ namespace ViberTest.BLL
             HttpClient _cient = new HttpClient();
             HttpRequestMessage _request = new HttpRequestMessage();
             HttpResponseMessage _respond = new HttpResponseMessage();
-            JObject js = new JObject();
-            js.Add("name", sender.name);
-            js.Add("avatar", sender.avatar);
+            JObject jsender = new JObject();
+            jsender.Add("name", sender.name);
+            jsender.Add("avatar", sender.avatar);
             JObject _jContent = new JObject();
             _request.Headers.Clear();
             _request.RequestUri = new Uri("https://chatapi.viber.com/pa/send_message");
@@ -87,7 +87,7 @@ namespace ViberTest.BLL
 
             _jContent.Add("receiver", userID);
             _jContent.Add("min_api_version", 1);
-            _jContent.Add("sender", js);
+            _jContent.Add("sender", jsender);
             _jContent.Add("tracking_data", "tracking data");
             _jContent.Add("type", "text");
             _jContent.Add("text", msg);

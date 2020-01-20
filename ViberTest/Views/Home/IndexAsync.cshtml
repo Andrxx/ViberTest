@@ -1,6 +1,5 @@
 ﻿@Scripts.Render("~/bundles/modernizr")
 @Scripts.Render("~/bundles/jquery")
-@Scripts.Render("~/bundles/jquery-ui")
 @{
     ViewBag.Title = "IndexAsync";
 }
@@ -42,7 +41,7 @@
         event.preventDefault();
         //alert($('#msg').val());
         var cont = {
-            viberToken: "4acbce3d2567d680-2b47e9fc1afd1297-aace9bf974f27814",
+            viberToken: "4addaa2c4da7dee0-1e71c2088f77e61c-2ffe40d0ad8cc31c",
         };
 
         as.viberChat.removeWebhook(cont);
@@ -70,7 +69,7 @@
         event.preventDefault();
         //alert($('#broadcast_text').val());
         var cont1 = {
-            viberToken: '4acbce3d2567d680-2b47e9fc1afd1297-aace9bf974f27814',
+            viberToken: '4addaa2c4da7dee0-1e71c2088f77e61c-2ffe40d0ad8cc31c',
             msg: $('#broadcast_text').val(),
             sender: {
                 name: 'Ковалев',
@@ -87,8 +86,8 @@
         event.preventDefault();
         //alert($('#msg').val());
         var cont2 = {
-            viberToken: "4acbce3d2567d680-2b47e9fc1afd1297-aace9bf974f27814",//"4addaa2c4da7dee0-1e71c2088f77e61c-2ffe40d0ad8cc31c", //
-            botUri: "https://test1.web-automation.ru/Bot/Setup",
+            viberToken: "4addaa2c4da7dee0-1e71c2088f77e61c-2ffe40d0ad8cc31c",//"4addaa2c4da7dee0-1e71c2088f77e61c-2ffe40d0ad8cc31c", //
+            botUri:  "https://test1.web-automation.ru/Bot/Setup",
             event: "webhook"
         };
         console.log('webhook');

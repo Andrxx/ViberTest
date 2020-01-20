@@ -170,6 +170,7 @@ as.viberChat = {
             }
         });
     },
+
     sbTest: function (cont) {
         console.log('test subscribe');
         console.log(cont);
